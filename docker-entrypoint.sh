@@ -14,7 +14,9 @@ php artisan cache:clear
 php artisan optimize:clear
 
 # Run migrations
-php artisan migrate --force || echo $DATABASE_URL
+mysql -h mysql.railway.internal -u root -p "irHzncReYPOyelLyihrHbxpfDYeQOleZ"
+
+php artisan migrate --force || echo "a7a"
 
 # Start PHP-FPM
 exec "$@"
