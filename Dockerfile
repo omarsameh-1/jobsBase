@@ -28,7 +28,7 @@ RUN chown -R www-data:www-data /var/www/html
 RUN composer install --no-dev --optimize-autoloader
 
 # Expose PHP-FPM port
-EXPOSE 9000
+EXPOSE 8080
 
 # Use entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
