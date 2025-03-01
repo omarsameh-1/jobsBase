@@ -14,8 +14,7 @@ php artisan cache:clear
 php artisan optimize:clear
 
 # Run migrations
-php artisan migrate --forse || echo $DATABASE_URL
-
+php artisan migrate --force || echo $DATABASE_URL
 
 # Start PHP-FPM
 exec "$@"
