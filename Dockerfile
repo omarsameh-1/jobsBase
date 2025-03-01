@@ -1,5 +1,5 @@
-# Use PHP 8.0.2 official image
-FROM php:8.2.0-fpm
+# Use PHP 8.2 official image
+FROM php:8.2-fpm
 
 # Install required dependencies
 RUN apt-get update && apt-get install -y \
@@ -21,17 +21,19 @@ WORKDIR /var/www/html
 # Copy Laravel files
 COPY . .
 
-# Set permissions
-RUN chmod -R 777 storage bootstrap/cache
+# Set correct permissions
+RUN chown -R www-data:www-data /var/www/html
 
-# Run Laravel migrations
-RUN php artisan config:clear
-RUN php artisan cache:clear
-RUN php artisan optimize:clear
-RUN php artisan storage:link
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-RUN php artisan migrate --force
+# Expose PHP-FPM port
+EXPOSE 9000
 
+# Use entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
 
+ENTRYPOINT ["docker-entrypoint"]
 
 CMD ["php-fpm"]
