@@ -9,12 +9,11 @@ echo "Waiting for database..."
 sleep 5
 
 # Clear caches
-php artisan config:clear
-php artisan cache:clear
-php artisan optimize:clear
+# php artisan config:clear
+# php artisan cache:clear
+# php artisan optimize:clear
 
 # Run migrations
-mysql -h mysql.railway.internal -u root -p "irHzncReYPOyelLyihrHbxpfDYeQOleZ"
 
 php artisan migrate --force || echo "a7a"
 
