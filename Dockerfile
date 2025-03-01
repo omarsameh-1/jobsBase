@@ -27,6 +27,9 @@ RUN chmod -R 777 storage bootstrap/cache
 # Run Laravel migrations
 RUN php artisan config:clear
 RUN php artisan cache:clear
+RUN php artisan optimize:clear
+RUN php artisan storage:link
+
 RUN php artisan migrate --force
 
 
