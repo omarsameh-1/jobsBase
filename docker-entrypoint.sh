@@ -14,7 +14,8 @@ php artisan cache:clear
 php artisan optimize:clear
 
 # Run migrations
-php artisan migrate --verbose || echo "Migrations failed, continuing..."
+php artisan migrate --forse || echo $DATABASE_URL
+
 
 # Start PHP-FPM
 exec "$@"
