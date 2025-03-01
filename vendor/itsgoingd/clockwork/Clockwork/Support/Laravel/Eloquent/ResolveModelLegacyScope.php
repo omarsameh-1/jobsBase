@@ -2,7 +2,9 @@
 
 use Clockwork\DataSource\EloquentDataSource;
 
-use Illuminate\Database\Eloquent\{Builder, Model, ScopeInterface};
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ScopeInterface;
 
 class ResolveModelLegacyScope implements ScopeInterface
 {

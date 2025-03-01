@@ -72,7 +72,11 @@ class SlimDataSource extends DataSource
 
 			$value = $this->slim->request()->headers($header, $value);
 
-			$headers[$header] = array_merge($headers[$header] ?? [], [ $value ]);
+			if (! isset($headers[$header])) {
+				$headers[$header] = [ $value ];
+			} else {
+				$headers[$header][] = $value;
+			}
 		}
 
 		ksort($headers);

@@ -49,8 +49,7 @@ class SymfonyStorage extends FileStorage
 	protected function makeRequestFromIndex($record)
 	{
 		return new Request(array_combine(
-			[ 'id', 'method', 'uri', 'time', 'parent', 'responseStatus' ],
-			[ $record[0], $record[2], $record[3], $record[4], $record[5], $record[6] ]
+			[ 'id', 'ip', 'method', 'uri', 'time', 'parent', 'responseStatus' ], $record
 		));
 	}
 }

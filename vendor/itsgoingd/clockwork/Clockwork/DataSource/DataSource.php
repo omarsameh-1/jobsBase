@@ -28,7 +28,8 @@ class DataSource implements DataSourceInterface
 	// Register a new filter
 	public function addFilter(\Closure $filter, $type = 'default')
 	{
-		$this->filters[$type] = array_merge($this->filters[$type] ?? [], [ $filter ]);
+		$this->filters[$type] = isset($this->filters[$type])
+			? array_merge($this->filters[$type], [ $filter ]) : [ $filter ];
 
 		return $this;
 	}
@@ -44,7 +45,7 @@ class DataSource implements DataSourceInterface
 	// Returns boolean whether the filterable passes all registered filters
 	protected function passesFilters($args, $type = 'default')
 	{
-		$filters = $this->filters[$type] ?? [];
+		$filters = isset($this->filters[$type]) ? $this->filters[$type] : [];
 
 		foreach ($filters as $filter) {
 			if (! $filter(...$args)) return false;

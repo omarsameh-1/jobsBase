@@ -93,7 +93,7 @@ class ClockworkMiddleware
 			->withHeader('X-Clockwork-Version', Clockwork::VERSION);
 
 		if ($basePath = $this->app->getBasePath()) {
-			$response = $response->withHeader('X-Clockwork-Path', "$basePath/__clockwork/");
+			$response = $response->withHeader('X-Clockwork-Path', $basePath);
 		}
 
 		return $response->withHeader('Server-Timing', ServerTiming::fromRequest($clockworkRequest)->value());

@@ -2,7 +2,8 @@
 
 use Clockwork\DataSource\DataSource;
 use Clockwork\Helpers\Serializer;
-use Clockwork\Request\{Log, Request};
+use Clockwork\Request\Log;
+use Clockwork\Request\Request;
 
 use Illuminate\Contracts\Foundation\Application;
 use Symfony\Component\HttpFoundation\Response;
@@ -205,13 +206,13 @@ class LaravelDataSource extends DataSource
 			$keyName = method_exists($user, 'getAuthIdentifierName') ? $user->getAuthIdentifierName() : $user->getKeyName();
 			$user = $user->getAttributes();
 
-			$userId = $user[$keyName] ?? null;
-			$userEmail = $user['email'] ?? $userId;
-			$userName = $user['name'] ?? null;
+			$userId = isset($user[$keyName]) ? $user[$keyName] : null;
+			$userEmail = isset($user['email']) ? $user['email'] : $userId;
+			$userName = isset($user['name']) ? $user['name'] : null;
 		} else {
 			$userId = $user->getAuthIdentifier();
-			$userEmail = $user->email ?? $userId;
-			$userName = $user->name ?? null;
+			$userEmail = isset($user->email) ? $user->email : $userId;
+			$userName = isset($user->name) ? $user->name : null;
 		}
 
 		$request->setAuthenticatedUser($userEmail, $userId, [

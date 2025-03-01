@@ -1,5 +1,5 @@
 # Use PHP 8.0.2 official image
-FROM php:8.0.2-fpm
+FROM php:8.2.0-fpm
 
 # Install required dependencies
 RUN apt-get update && apt-get install -y \

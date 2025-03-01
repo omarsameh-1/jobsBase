@@ -2,7 +2,8 @@
 
 use Clockwork\DataSource\DataSource;
 use Clockwork\Helpers\Serializer;
-use Clockwork\Request\{Log, Request};
+use Clockwork\Request\Log;
+use Clockwork\Request\Request;
 
 use Laravel\Lumen\Application;
 use Symfony\Component\HttpFoundation\Response;
@@ -93,7 +94,13 @@ class LumenDataSource extends DataSource
 		$method = $this->getRequestMethod();
 		$pathInfo = $this->getPathInfo();
 
-		$controller = $routes[$method.$pathInfo]['action']['uses'] ?? $routes[$method.$pathInfo]['action'][0] ?? null;
+		if (isset($routes[$method.$pathInfo]['action']['uses'])) {
+			$controller = $routes[$method.$pathInfo]['action']['uses'];
+		} elseif (isset($routes[$method.$pathInfo]['action'][0])) {
+			$controller = $routes[$method.$pathInfo]['action'][0];
+		} else {
+			$controller = null;
+		}
 
 		if ($controller instanceof \Closure) {
 			$controller = 'anonymous function';
@@ -153,9 +160,9 @@ class LumenDataSource extends DataSource
 			return [
 				'method' => $route['method'],
 				'uri'    => $route['uri'],
-				'name'   => $route['action']['as'] ?? null,
-				'action' => is_string($route['action']['uses'] ?? null) ? $route['action']['uses'] : 'anonymous function',
-				'middleware' => $route['action']['middleware'] ?? null,
+				'name'   => isset($route['action']['as']) ? $route['action']['as'] : null,
+				'action' => isset($route['action']['uses']) && is_string($route['action']['uses']) ? $route['action']['uses'] : 'anonymous function',
+				'middleware' => isset($route['action']['middleware']) ? $route['action']['middleware'] : null,
 			];
 		}, $routes);
 	}
@@ -177,7 +184,7 @@ class LumenDataSource extends DataSource
 
 		$request->setAuthenticatedUser($user->email, $user->id, [
 			'email' => $user->email,
-			'name'  => $user->name ?? null
+			'name'  => isset($user->name) ? $user->name : null
 		]);
 	}
 
@@ -187,7 +194,7 @@ class LumenDataSource extends DataSource
 		if ($this->app->bound('request')) {
 			return $this->app['request']->getPathInfo();
 		} else {
-			$query = $_SERVER['QUERY_STRING'] ?? '';
+			$query = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 			return '/' . trim(str_replace("?{$query}", '', $_SERVER['REQUEST_URI']), '/');
 		}
 	}

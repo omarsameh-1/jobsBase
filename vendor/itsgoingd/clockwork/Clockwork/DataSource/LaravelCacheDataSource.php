@@ -1,6 +1,7 @@
 <?php namespace Clockwork\DataSource;
 
-use Clockwork\Helpers\{Serializer, StackTrace};
+use Clockwork\Helpers\Serializer;
+use Clockwork\Helpers\StackTrace;
 use Clockwork\Request\Request;
 
 use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
@@ -103,7 +104,7 @@ class LaravelCacheDataSource extends DataSource
 		$record = [
 			'type'       => $query['type'],
 			'key'        => $query['key'],
-			'expiration' => $query['expiration'] ?? null,
+			'expiration' => isset($query['expiration']) ? $query['expiration'] : null,
 			'time'       => microtime(true),
 			'connection' => null,
 			'trace'      => (new Serializer)->trace($trace)

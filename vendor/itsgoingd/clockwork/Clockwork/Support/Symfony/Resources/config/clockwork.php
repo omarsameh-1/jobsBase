@@ -4,9 +4,7 @@ use Clockwork\Support\Symfony\ClockworkFactory;
 
 use Symfony\Component\DependencyInjection\Reference;
 
-$container->register(Clockwork\Support\Symfony\ClockworkFactory::class)
-	->setArgument('$container', new Reference('service_container'))
-	->setArgument('$profiler', new Reference('profiler'));
+$container->autowire(Clockwork\Support\Symfony\ClockworkFactory::class);
 
 $container->register(Clockwork\Clockwork::class)
 	->setFactory([ new Reference(ClockworkFactory::class), 'clockwork' ])

@@ -1,6 +1,7 @@
 <?php namespace Clockwork\Storage;
 
-use Clockwork\Request\{Request, RequestType};
+use Clockwork\Request\Request;
+use Clockwork\Request\RequestType;
 
 // Rules for searching requests
 class Search
@@ -22,11 +23,11 @@ class Search
 	public function __construct($search = [], $options = [])
 	{
 		foreach ([ 'uri', 'controller', 'method', 'status', 'time', 'received', 'name', 'type' ] as $condition) {
-			$this->$condition = $search[$condition] ?? [];
+			$this->$condition = isset($search[$condition]) ? $search[$condition] : [];
 		}
 
 		foreach ([ 'stopOnFirstMismatch' ] as $option) {
-			$this->$option = $options[$option] ?? $this->$option;
+			$this->$option = isset($options[$option]) ? $options[$option] : $this->$option;
 		}
 
 		$this->method = array_map('strtolower', $this->method);

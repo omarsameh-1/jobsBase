@@ -1,8 +1,12 @@
 <?php namespace Clockwork\Support\Laravel\Tests;
 
-use Clockwork\Helpers\{Serializer, StackFilter, StackTrace};
+use Clockwork\Helpers\Serializer;
+use Clockwork\Helpers\StackFilter;
+use Clockwork\Helpers\StackTrace;
 
-use PHPUnit\{Event, Runner, TextUI};
+use PHPUnit\Event;
+use PHPUnit\Runner;
+use PHPUnit\TextUI;
 
 // Extension for collecting executed tests, compatible with PHPUnit 10+
 class ClockworkExtension implements Runner\Extension\Extension

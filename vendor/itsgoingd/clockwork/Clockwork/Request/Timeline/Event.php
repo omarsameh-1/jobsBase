@@ -21,13 +21,13 @@ class Event
 	public function __construct($description, $data = [])
 	{
 		$this->description = $description;
-		$this->name = $data['name'] ?? $description;
+		$this->name = isset($data['name']) ? $data['name'] : $description;
 
-		$this->start = $data['start'] ?? null;
-		$this->end = $data['end'] ?? null;
+		$this->start = isset($data['start']) ? $data['start'] : null;
+		$this->end = isset($data['end']) ? $data['end'] : null;
 
-		$this->color = $data['color'] ?? null;
-		$this->data = $data['data'] ?? null;
+		$this->color = isset($data['color']) ? $data['color'] : null;
+		$this->data = isset($data['data']) ? $data['data'] : null;
 	}
 
 	// Begin the event at current time
@@ -47,11 +47,11 @@ class Event
 	}
 
 	// Begin the event, execute the passed in closure and end the event, returns the closure return value
-	public function run(\Closure $closure, ...$args)
+	public function run(\Closure $closure)
 	{
 		$this->begin();
 		try {
-			return $closure(...$args);
+			return $closure();
 		} finally {
 			$this->end();
 		}

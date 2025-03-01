@@ -1,7 +1,8 @@
 <?php namespace Clockwork\Support\Symfony;
 
 use Symfony\Component\Config\Loader\Loader;
-use Symfony\Component\Routing\{Route, RouteCollection};
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
 class ClockworkLoader extends Loader
 {
@@ -12,7 +13,7 @@ class ClockworkLoader extends Loader
 		$this->support = $support;
 	}
 
-	public function load($resource, $type = null): mixed
+	public function load($resource, $type = null)
 	{
 		$routes = new RouteCollection();
 
@@ -45,7 +46,7 @@ class ClockworkLoader extends Loader
 		return $routes;
 	}
 
-	public function supports($resource, $type = null): bool
+	public function supports($resource, $type = null)
 	{
 		return $type == 'clockwork';
 	}
