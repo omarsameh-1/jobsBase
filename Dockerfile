@@ -25,6 +25,10 @@ COPY . .
 RUN chmod -R 777 storage bootstrap/cache
 
 # Run Laravel migrations
+RUN php artisan config:clear
+RUN php artisan cache:clear
 RUN php artisan migrate --force
+
+
 
 CMD ["php-fpm"]
